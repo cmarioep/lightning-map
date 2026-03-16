@@ -5,16 +5,12 @@ import { getNg } from "./utils/ng"
 import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 
-import markerIcon from "leaflet/dist/images/marker-icon.png"
-import markerShadow from "leaflet/dist/images/marker-shadow.png"
-
 delete L.Icon.Default.prototype._getIconUrl
 
 L.Icon.Default.mergeOptions({
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   iconSize: [25, 41],
-  iconAnchor: [12, 41],
+  iconAnchor: [12, 41]
 })
 
 export default function App() {
