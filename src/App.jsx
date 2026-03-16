@@ -2,6 +2,21 @@ import { useEffect, useState } from "react"
 import LightningMap from "./components/LightningMap"
 import { getNg } from "./utils/ng"
 
+import L from "leaflet"
+import "leaflet/dist/leaflet.css"
+
+import markerIcon from "leaflet/dist/images/marker-icon.png"
+import markerShadow from "leaflet/dist/images/marker-shadow.png"
+
+delete L.Icon.Default.prototype._getIconUrl
+
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+})
+
 export default function App() {
 
   const [dataset, setDataset] = useState(null)
