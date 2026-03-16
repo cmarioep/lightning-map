@@ -1,5 +1,6 @@
-import { MapContainer, TileLayer, Rectangle, useMapEvents, Marker, Popup } from "react-leaflet"
+import { MapContainer, TileLayer, Rectangle, useMapEvents, Marker, Popup, CircleMarker } from "react-leaflet"
 import { getNg } from "../utils/ng"
+
 
 
 function colorScale(ng) {
@@ -83,17 +84,16 @@ export default function LightningMap({ dataset, setValue, marker }) {
             <ClickHandler dataset={dataset} setValue={setValue} />
 
             {marker && (
-
-                <Marker position={[marker.lat, marker.lon]}>
-
-                    <Popup>
-                        <b>Lat:</b> {marker.lat.toFixed(4)} <br />
-                        <b>Lon:</b> {marker.lon.toFixed(4)} <br />
-                        <b>Ng:</b> {marker.ng ?? "Sin datos"}
-                    </Popup>
-
-                </Marker>
-
+                <CircleMarker
+                    center={[marker.lat, marker.lon]}
+                    radius={8}
+                    pathOptions={{
+                        color: "white",
+                        weight: 2,
+                        fillColor: "red",
+                        fillOpacity: 1
+                    }}
+                />
             )}
 
         </MapContainer>
