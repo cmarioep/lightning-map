@@ -19,5 +19,8 @@ export function getNg(lat, lon, dataset) {
         return null
     }
 
-    return data[latIndex][lonIndex]
+    const k = 0.25
+    const ng = (k * data[latIndex][lonIndex]).toFixed(2);
+
+    return ng
 }
