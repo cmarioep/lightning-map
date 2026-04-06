@@ -1,0 +1,52 @@
+// ─── Color palette (light mode) ─────────────────────────────────────────────
+$color-bg:           #f1f5f9;
+$color-surface:      #ffffff;
+$color-surface-2:    #f8fafc;
+$color-border:       rgba(0, 0, 0, 0.08);
+$color-border-light: rgba(0, 0, 0, 0.14);
+
+$color-accent:       #19c37d;
+$color-accent-dim:   rgba(25, 195, 125, 0.10);
+$color-accent-glow:  rgba(25, 195, 125, 0.20);
+$color-cyan:         #0891b2;   // teal azul
+
+$color-text:         #0f172a;
+$color-text-muted:   #64748b;
+$color-text-dim:     #cbd5e1;
+
+// ─── Ng scale colors (mirror LightningMap.jsx COLOR_STOPS) ──────────────────
+$ng-color-0:  #00ffcc;  // < 2   Muy Bajo
+$ng-color-1:  #00ff00;  // 2–5   Bajo
+$ng-color-2:  #ffff00;  // 5–10  Moderado
+$ng-color-3:  #ff9900;  // 10–20 Alto
+$ng-color-4:  #ff0000;  // 20–50 Muy Alto
+$ng-color-5:  #990000;  // ≥ 50  Extremo
+
+// ─── Layout ─────────────────────────────────────────────────────────────────
+$sidebar-width:  280px;
+$map-width:      568px;   // lon_span_mercator / lat_span_mercator * map-height (680px)
+$map-height:     680px;
+$header-height:  60px;
+
+// ─── Spacing ────────────────────────────────────────────────────────────────
+$space-xs:  4px;
+$space-sm:  8px;
+$space-md:  16px;
+$space-lg:  24px;
+$space-xl:  36px;
+
+// ─── Radius ─────────────────────────────────────────────────────────────────
+$radius-sm:  6px;
+$radius-md:  10px;
+$radius-lg:  16px;
+
+// ─── Typography ─────────────────────────────────────────────────────────────
+$font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, 'Cascadia Code', monospace;
+
+// ─── Shadows ────────────────────────────────────────────────────────────────
+$shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+$shadow-glow: 0 0 16px $color-accent-glow;
+
+// ─── Transitions ────────────────────────────────────────────────────────────
+$transition: 200ms ease;

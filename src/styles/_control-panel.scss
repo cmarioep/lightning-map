@@ -1,0 +1,113 @@
+@use 'sass:color';
+@use 'variables' as *;
+
+// ─── Block: control-panel ────────────────────────────────────────────────────
+.control-panel {
+    padding: $space-lg;
+    border-bottom: 1px solid $color-border;
+
+    // ── Element: section heading ─────────────────────────────────────────────
+    &__heading {
+        display: flex;
+        align-items: center;
+        gap: $space-sm;
+        margin-bottom: $space-md;
+
+        span {
+            font-size: 11px;
+            font-weight: 600;
+            color: $color-text-muted;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        &::before {
+            content: '';
+            display: block;
+            width: 3px;
+            height: 12px;
+            background: $color-accent;
+            border-radius: 2px;
+        }
+    }
+
+    // ── Element: hint text ───────────────────────────────────────────────────
+    &__hint {
+        font-size: 12px;
+        color: $color-text-muted;
+        margin-bottom: $space-md;
+        line-height: 1.5;
+    }
+
+    // ── Element: field wrapper ────────────────────────────────────────────────
+    &__fields {
+        display: flex;
+        flex-direction: column;
+        gap: $space-sm;
+        margin-bottom: $space-md;
+    }
+
+    // ── Element: individual field ─────────────────────────────────────────────
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: $space-xs;
+    }
+
+    // ── Element: label ───────────────────────────────────────────────────────
+    &__label {
+        font-size: 11px;
+        font-weight: 500;
+        color: $color-text-muted;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+    }
+
+    // ── Element: input ───────────────────────────────────────────────────────
+    &__input {
+        width: 100%;
+        padding: 9px $space-md;
+        background: $color-surface-2;
+        border: 1px solid $color-border-light;
+        border-radius: $radius-sm;
+        color: $color-text;
+        font-family: $font-mono;
+        font-size: 13px;
+        outline: none;
+        transition: border-color $transition, box-shadow $transition;
+
+        &::placeholder {
+            color: $color-text-dim;
+        }
+
+        &:focus {
+            border-color: rgba($color-accent, 0.5);
+            box-shadow: 0 0 0 3px rgba($color-accent, 0.08);
+        }
+    }
+
+    // ── Element: submit button ────────────────────────────────────────────────
+    &__submit {
+        width: 100%;
+        padding: 10px $space-md;
+        background: $color-accent;
+        border: none;
+        border-radius: $radius-sm;
+        color: white;
+        font-family: $font-sans;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        cursor: pointer;
+        transition: background $transition, box-shadow $transition, transform $transition;
+
+        &:hover {
+            background: color.adjust($color-accent, $lightness: 8%);
+            box-shadow: 0 4px 16px rgba($color-accent, 0.35);
+        }
+
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+}

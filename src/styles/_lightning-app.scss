@@ -1,0 +1,77 @@
+@use 'variables' as *;
+
+// ─── Block: lightning-app ────────────────────────────────────────────────────
+// Tarjeta de tamaño fijo centrada en página. El ancho del mapa se derivó del
+// aspect ratio Mercator de los bounds del heatmap (0.8565 ≈ 582/680).
+.lightning-app {
+    width: $sidebar-width + $map-width;  // 862px
+    border-radius: $radius-lg;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid $color-border-light;
+
+    // ── Element: body — sidebar + mapa ──────────────────────────────────────
+    &__body {
+        display: flex;
+        height: $map-height;  // 680px
+    }
+
+    // ── Element: sidebar ────────────────────────────────────────────────────
+    &__sidebar {
+        width: $sidebar-width;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        background: $color-surface;
+        border-right: 1px solid $color-border;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        scrollbar-width: thin;
+        scrollbar-color: $color-border-light transparent;
+
+        &::-webkit-scrollbar       { width: 4px; }
+        &::-webkit-scrollbar-track { background: transparent; }
+        &::-webkit-scrollbar-thumb { background: $color-border-light; border-radius: 4px; }
+    }
+
+    // ── Element: map area — ancho exacto al aspect ratio Mercator ───────────
+    &__map {
+        width: $map-width;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    // ── Modifier: loading state ──────────────────────────────────────────────
+    &--loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $map-height;
+    }
+}
+
+// ─── Block: loading-screen ───────────────────────────────────────────────────
+.loading-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-md;
+
+    &__icon {
+        font-size: 48px;
+        animation: loading-pulse 1.4s ease-in-out infinite;
+    }
+
+    &__text {
+        color: $color-text-muted;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+    }
+}
+
+@keyframes loading-pulse {
+    0%, 100% { opacity: 1;   transform: scale(1);    }
+    50%       { opacity: 0.4; transform: scale(0.85); }
+}

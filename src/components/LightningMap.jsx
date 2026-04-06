@@ -1,5 +1,5 @@
-import { MapContainer, TileLayer, useMapEvents, CircleMarker, ImageOverlay } from "react-leaflet"
-import { useMemo } from "react"
+import { MapContainer, TileLayer, useMapEvents, useMap, CircleMarker, ImageOverlay } from "react-leaflet"
+import { useMemo, useEffect } from "react"
 import { getNg } from "../utils/ng"
 
 
@@ -86,6 +86,17 @@ function generateHeatmapImage(dataset) {
 }
 
 
+function BoundsController({ bounds }) {
+    const map = useMap()
+    useEffect(() => {
+        map.invalidateSize()
+        map.fitBounds(bounds, { animate: false, padding: [0, 0] })
+        map.setMaxBounds(bounds)
+        map.setMinZoom(map.getZoom())
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    return null
+}
+
 function ClickHandler({ dataset, setValue }) {
     useMapEvents({
         click(e) {
@@ -114,9 +125,11 @@ export default function LightningMap({ dataset, setValue, marker }) {
 
     return (
         <MapContainer
-            center={[4.5, -74]}
+            center={[4.25, -73.25]}
             zoom={6}
-            style={{ height: "600px" }}
+            zoomSnap={0}
+            maxBoundsViscosity={1.0}
+            style={{ height: "100%", width: "100%" }}
         >
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -128,6 +141,7 @@ export default function LightningMap({ dataset, setValue, marker }) {
                 opacity={0.5}
             />
 
+            <BoundsController bounds={bounds} />
             <ClickHandler dataset={dataset} setValue={setValue} />
 
             {marker && (

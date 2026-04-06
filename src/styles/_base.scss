@@ -1,0 +1,49 @@
+@use 'sass:color';
+@use 'variables' as *;
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: $font-sans;
+    font-size: 14px;
+    line-height: 1.5;
+    color: $color-text;
+    background: $color-bg;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-xl;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// ─── Leaflet overrides ──────────────────────────────────────────────────────
+.leaflet-container {
+    font-family: $font-sans;
+    background: #d8e8f0;   // light blue — visible cuando el mapa carga
+}
+
+.leaflet-control-attribution {
+    background: rgba(255, 255, 255, 0.85) !important;
+    color: $color-text-muted !important;
+    font-size: 10px;
+    border-top-left-radius: $radius-sm;
+
+    a { color: $color-cyan !important; }
+}
+
+.leaflet-control-zoom a {
+    background: $color-surface !important;
+    color: $color-text !important;
+    border-color: $color-border-light !important;
+
+    &:hover {
+        background: $color-surface-2 !important;
+        color: $color-accent !important;
+    }
+}
