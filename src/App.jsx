@@ -98,9 +98,14 @@ export default function App() {
             <p className="app-header__subtitle">
               Colombia — DDT/Ng (rayos/km²/año)
             </p>
-            <span className="app-header__badge">
+            <a
+              className="app-header__badge"
+              href="https://www.earthdata.nasa.gov/data/catalog/ghrc-daac-lohrfc-2.3.2015"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               NASA LIS/OTD · HRFC V2.3 · 2015
-            </span>
+            </a>
           </header>
 
           {/* Coordinate input */}
@@ -136,7 +141,7 @@ export default function App() {
               </div>
             </div>
             <button className="control-panel__submit" onClick={calculate}>
-              Calcular DDT/Ng
+              Obtener DDT/Ng
             </button>
           </section>
 

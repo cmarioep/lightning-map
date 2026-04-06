@@ -65,5 +65,12 @@
         letter-spacing: 0.4px;
         text-transform: uppercase;
         font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            background: rgba($color-cyan, 0.16);
+            border-color: rgba($color-cyan, 0.4);
+        }
     }
 }
