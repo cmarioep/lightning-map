@@ -15,35 +15,53 @@ No test suite is configured.
 
 ## Architecture
 
-This is a React + Vite app for visualizing lightning strike density (Ng — flashes/km²/year) across Colombia, based on NASA LIS/OTD satellite data.
+This is a React + Vite app for visualizing lightning strike density (DDT/Ng — rayos/km²/año) across Colombia, based on NASA LIS/OTD satellite data.
 
 ### Data Flow
 
 1. `App.jsx` fetches `/public/data/colombia_lightning.json` on mount — a 38×32 grid covering Colombia at 0.5° resolution (NASA LIS/OTD HRFC V2.3 2015).
-2. The grid data is passed to `LightningMap.jsx`, which renders color-coded rectangle overlays on a Leaflet map.
-3. When a user clicks the map or enters coordinates manually, `utils/ng.js` does a grid-based lookup to return the Ng value for that point.
+2. The grid data is passed to `LightningMap.jsx`, which generates a bilinear-interpolated canvas image rendered as a Leaflet `ImageOverlay`.
+3. When a user clicks the map or enters coordinates manually, `utils/ng.js` does a grid-based lookup to return the Ng value for that point. `getNg` returns a **string** (already formatted with `.toFixed(2)`).
 
 ### Key Files
 
-- [src/App.jsx](src/App.jsx) — root component; manages state (grid data, selected coordinates, Ng value), fetches data, handles coordinate input
-- [src/components/LightningMap.jsx](src/components/LightningMap.jsx) — Leaflet map with heatmap grid overlay (react-leaflet + leaflet.heat); color scale from cyan (<2) to dark red (≥50)
-- [src/utils/ng.js](src/utils/ng.js) — coordinate-to-Ng lookup; maps lat/lon to the nearest grid cell
-- [public/data/colombia_lightning.json](public/data/colombia_lightning.json) — lightning density dataset with metadata (bounds, resolution, units)
+- [src/App.jsx](src/App.jsx) — root component; layout (sidebar + map), state management, coordinate input, result card, floating legend
+- [src/components/LightningMap.jsx](src/components/LightningMap.jsx) — Leaflet map with bilinear-interpolated heatmap `ImageOverlay`; `BoundsController` fits and locks the view to the dataset bounds on mount
+- [src/utils/ng.js](src/utils/ng.js) — coordinate-to-Ng lookup; returns a string via `.toFixed(2)`
+- [public/data/colombia_lightning.json](public/data/colombia_lightning.json) — dataset: bounds lat [-5.25, 13.75], lon [-81.25, -65.25], 38×32 grid at 0.5°, k=0.25 factor applied
 
-### Stack
+### Styling
 
-- React 19 + Vite 8 (Oxc compiler via `@vitejs/plugin-react`)
-- Leaflet 1.9 + react-leaflet 5 for mapping
-- leaflet.heat for heatmap rendering
-- ESLint 9 flat config (`eslint.config.js`)
-- Plain JavaScript/JSX (no TypeScript)
+SCSS with BEM methodology. Entry point: `src/styles/main.scss`.
+
+| Partial | Block |
+|---|---|
+| `_variables.scss` | design tokens (colors, spacing, layout sizes) |
+| `_base.scss` | reset + Leaflet overrides |
+| `_lightning-app.scss` | `.lightning-app` — card layout (862×680px, centered) |
+| `_app-header.scss` | `.app-header` — branding + badge |
+| `_control-panel.scss` | `.control-panel` — coordinate inputs + button |
+| `_result-card.scss` | `.result-card` — Ng value, classification badge, coords |
+| `_map-legend.scss` | `.map-legend` — floating card on map (bottom-left) |
+
+### Layout
+
+Fixed-size card centered on page: sidebar `280px` + map `568px` = `848px` wide × `680px` tall.
+Map width derived from Mercator aspect ratio of dataset bounds (lon_span / lat_mercator_span ≈ 0.856).
+
+### Map Behavior
+
+- `BoundsController` inside `MapContainer`: calls `invalidateSize()` + `fitBounds(bounds, { padding: [0,0] })` + `setMaxBounds` + `setMinZoom` on mount.
+- `zoomSnap={0}` for fractional zoom so `fitBounds` fills the container edge-to-edge.
+- `maxBoundsViscosity={1.0}` prevents panning outside the dataset bounds.
+- Map cursor: `default` (arrow) normally, `grabbing` only while dragging.
 
 ### Color Scale Convention
 
-Grid cells are colored by Ng value:
-- `< 2` → cyan `#00ffcc`
-- `< 5` → green `#00ff00`
-- `< 10` → yellow `#ffff00`
-- `< 20` → orange `#ff9900`
-- `< 50` → red `#ff0000`
-- `≥ 50` → dark red `#990000`
+Heatmap interpolates continuously between stops:
+- `0` → cyan `#00ffcc` (Muy Bajo)
+- `2` → green `#00ff00` (Bajo)
+- `5` → yellow `#ffff00` (Moderado)
+- `10` → orange `#ff9900` (Alto)
+- `20` → red `#ff0000` (Muy Alto)
+- `≥ 50` → dark red `#990000` (Extremo)

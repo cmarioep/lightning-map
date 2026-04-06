@@ -25,7 +25,12 @@ body {
 // ─── Leaflet overrides ──────────────────────────────────────────────────────
 .leaflet-container {
     font-family: $font-sans;
-    background: #d8e8f0;   // light blue — visible cuando el mapa carga
+    background: #d8e8f0;
+    cursor: default !important;   // flecha estándar por defecto
+}
+
+.leaflet-dragging .leaflet-container {
+    cursor: grabbing !important;  // manito solo al arrastrar
 }
 
 .leaflet-control-attribution {
